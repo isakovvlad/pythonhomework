@@ -1,6 +1,7 @@
 # pythonlesson1
 
 Занятие 1.<br>
-Дз:
+Дз:<br>
 <code>
 print(a)
+</code>
