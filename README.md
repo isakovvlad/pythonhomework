@@ -1,2 +1,4 @@
 # pythonlesson1
-#print(a)
+
+Занятие 1.
+Дз:
