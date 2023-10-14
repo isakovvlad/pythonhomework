@@ -2,6 +2,4 @@
 
 Занятие 1.<br>
 Дз:<br>
-<code>
-print(a)
-</code>
+<code>print(a)</code>
