@@ -1,4 +1,4 @@
-#pythonhomework
+#python
 
 Занятие 1.<br>
 Дз:<br>
