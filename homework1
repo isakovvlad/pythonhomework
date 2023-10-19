@@ -1,0 +1,16 @@
+class Vector():
+    
+    def __init__(self, *a):
+        self.a = a
+        
+    def plus(self, *plus):
+        res_plus = [vi + wi for vi, wi in zip(self.a, plus)]
+        return res_plus
+        
+    def minus(self, *minus):
+        res_minus = [vi - wi for vi, wi in zip(self.a, minus)]
+        return res_minus
+        
+    def multiply(self, mult):
+        res_multiply = [mult * vi for vi in self.a]
+        return res_multiply
