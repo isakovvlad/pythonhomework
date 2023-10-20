@@ -1,3 +1,4 @@
+#Класс в котором создание вектора, сложение и разность веторов, скалярное произведение векторов, модуль вектора и угл между векторами
 class Vector():
     
     def __init__(self, *p):
@@ -22,14 +23,17 @@ class Vector():
         return k
     
     def __abs__(self):
-        return ((self * self) ** 0.5)
+        mod = ((self * self) ** 0.5)
+        return mod
           
     def anglevectors(self, x):
-        return ((self * x) / ((abs(self)) * (abs(x))))
+        ang = ((self * x) / ((abs(self)) * (abs(x))))
+        return ang
 
     def __str__(self):
         return str(*self.p)
 
+#Это для теста
 #a = Vector(1, 2, 3, 4)
 #b = Vector(5, 6, 7, 8)
 #print('a + b = c', a + b)
