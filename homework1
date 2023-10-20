@@ -1,26 +1,39 @@
-#Класс n-мерного вектора
 class Vector():
     
-    def __init__(self, *v):
-        self.v = v
-
-    def m(self, mult):
-        m = [mult * i for i in self.v]
-        return m
-
-    def p(self, *p):
-        pp = [i + j for i, j in zip(self.v, p)]
-        return pp
+    def __init__(self, *p):
+        self.p = p 
+    
+    def __add__(self, x):
+        k = []
+        for i in range(len(self.p)):
+            k.append(self.p[i] + x.p[i])
+        return Vector(k)
         
-    def minus(self, *minus):
-        min = [i - j for i, j in zip(self.v, minus)]
-        return min
+    def __sub__(self, x):
+        k = []
+        for j in range(len(self.p)):
+            k.append(self.p[j] - x.p[j])
+        return Vector(k)
+        
+    def __mul__(self, x):
+        k = 0
+        for l in range(len(self.p)):
+            k += self.p[l] * x.p[l]
+        return k
+    
+    def __abs__(self):
+        return((self * self) ** 0.5)
+          
+    def anglevectors(self, x):
+        return((self * x) / ((abs(self)) * (abs(x))))
 
-# создание вектора v, который является 6-мерным
-#v = Vector(2,4,5,7,9,9)
-# к вектору v прибавляем другой вектор
-#print('plus:', v.p(1,3,4,7,8,9))
-# отнимаем от вектора v другой вектор
-#print('minus:', v.minus(1,3,4,7,8,9))
-# умножаем вектор v на число
-#print('multiply:', v.m(4))
+    def __str__(self):
+        return str(*self.p)
+
+#a = Vector(1, 2, 3, 4)
+#b = Vector(5, 6, 7, 8)
+#print('a + b = c', a + b)
+#print('b - a = d', b - a)
+#print('scalar mul:', a * b)
+#print('|a| =', abs(a), '|b| =', abs(b))
+#print('angle', a.anglevectors(b))
