@@ -11,10 +11,10 @@ class Complex(object):
         return Complex(self.other - a.other, self.i - a.i)
 
     def __mul__(self, a):
-        return Complex(self.other * a.other, self.i * a.i)
+        return Complex(self.other * a.other - self.i * a.i, self.other * a.i + self.i * a.other)
 
     def __truediv__(self, a):
-        return Complex(self.other / a.other, self.i / a.i)
+        return Complex((self.other * a.other + self.i * a.i) / (a.other ** 2 + a.i ** 2), (self.i * a.other - self.other * a.i) / (a.other ** 2 + a.i ** 2))
 
     def __abs__(self):
         return Complex((self.other ** 2 + self.i ** 2) ** 0.5, 0)
