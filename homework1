@@ -4,40 +4,40 @@ class Vector():
     def __init__(self, *p):
         self.p = p 
     
-    def __add__(self, x):
+    def __add__(self, t):
         k = []
         for i in range(len(self.p)):
-            k.append(self.p[i] + x.p[i])
+            k.append(self.p[i] + t.p[i])
         return Vector(k)
         
-    def __sub__(self, x):
+    def __sub__(self, t):
         k = []
         for j in range(len(self.p)):
-            k.append(self.p[j] - x.p[j])
+            k.append(self.p[j] - t.p[j])
         return Vector(k)
         
-    def __mul__(self, x):
+    def __mul__(self, t):
         k = 0
         for l in range(len(self.p)):
-            k += self.p[l] * x.p[l]
+            k += self.p[l] * t.p[l]
         return k
     
     def __abs__(self):
         mod = ((self * self) ** 0.5)
         return mod
           
-    def anglevectors(self, x):
-        ang = ((self * x) / ((abs(self)) * (abs(x))))
+    def anglevectors(self, t):
+        ang = ((self * t) / ((abs(self)) * (abs(t))))
         return ang
 
     def __str__(self):
         return str(*self.p)
 
 #Это для теста
-#a = Vector(1, 2, 3, 4)
-#b = Vector(5, 6, 7, 8)
-#print('a + b = c', a + b)
-#print('b - a = d', b - a)
-#print('scalar mul:', a * b)
-#print('|a| =', abs(a), '|b| =', abs(b))
-#print('angle', a.anglevectors(b))
+#x = Vector(1, 2, 3, 4)
+#y = Vector(5, 6, 7, 8)
+#print('x + y = z', x + y)
+#print('x - y = f', y - x)
+#print('scalar mul:', x * y)
+#print('|x| =', abs(x), '|y| =', abs(y))
+#print('angle', x.anglevectors(y))
