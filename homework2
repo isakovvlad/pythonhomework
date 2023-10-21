@@ -1,4 +1,4 @@
-class Complex(object):
+class Complex():
     
     def __init__(self, other, i):
         self.other = other
