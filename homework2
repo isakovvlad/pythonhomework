@@ -26,7 +26,20 @@ class Complex():
         
     def __eq__(self, a):
         return self.other == a.other and self.i == a.i
-
+        
+    def trig(self):
+        mod = (self.other ** 2 + self.i ** 2) ** 0.5
+        alpha = math.atan(abs(self.i / self.other))
+        if self.i >= 0 and self.other >= 0:
+            beta = alpha
+        if self.i < 0 and self.other >= 0:
+            beta = math.pi * 2 - alpha
+        if self.i >= 0 and self.other < 0:
+            beta = math.pi - alpha
+        if self.i < 0 and self.other < 0:
+            beta = math.pi + alpha
+        return '%.2f(cos(%.2f) + i*sin(%.2f))' % (mod, beta, beta)
+        
     def __str__(self):
         if self.i == 0:
             return '%.2f + 0.00i' % (self.other)
@@ -53,3 +66,5 @@ print('|y| =', str(abs(y)))
 print('a =', str(x.angle()))
 print('b =', str(y.angle()))
 print('Сравнение комплексных чисел =', str(x == y))
+print('Тригонометрическая форма запись комплексного числа x =', str(x.trig()))
+print('Тригонометрическая форма запись комплексного числа y =', str(y.trig()))
