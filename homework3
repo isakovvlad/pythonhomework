@@ -43,27 +43,27 @@ class Matrix():
         else:
             return 'Неверные данные'
 
-    def transpose(self, matrix):
-        return [list(i) for i in zip(*matrix)]
+    def transpose(self, m):
+        return [list(i) for i in zip(*m)]
 
     def getTranspose(self):
         return self.transpose(self.matrix)
     
     @staticmethod
-    def find(mat, r_s, c_s):
-        for i in range(r_s, mat.rows):
-            for j in range(c_s, mat.cols):
-                if mat.matrix[i][j] != 0:
+    def find(m, r_s, c_s):
+        for i in range(r_s, m.rows):
+            for j in range(c_s, m.cols):
+                if m.matrix[i][j] != 0:
                     return i, j
         return -1 
 
     @staticmethod
-    def kill(mat, r_p, c_p, c_s):
+    def kill(m, r_p, c_p, c_s):
         if c_s != r_p:
-            mat.matrix[c_s] = list(map(lambda x, y : x + y, mat.matrix[c_s], mat.matrix[r_p]))
-        for i in range(c_s + 1, mat.rows):
-            coef = -mat.matrix[i][c_p] / mat.matrix[r_p][c_p]
-            mat.matrix[i] = list(map(lambda x , y : x + y * coef, mat.matrix[i], mat.matrix[r_p]))
+            m.matrix[c_s] = list(map(lambda x, y : x + y, m.matrix[c_s], m.matrix[r_p]))
+        for i in range(c_s + 1, m.rows):
+            coef = -m.matrix[i][c_p] / m.matrix[r_p][c_p]
+            m.matrix[i] = list(map(lambda x , y : x + y * coef, m.matrix[i], m.matrix[r_p]))
     
     def gauss(self):
         col = 0
@@ -76,7 +76,7 @@ class Matrix():
     def __str__(self):
         out = ''
         for i in range(self.rows):
-            out += (str(self.matrix[i]))
+            out += str(self.matrix[i])
         return out
 
 m1 = Matrix(2, 2, [[1,2],[3,4]])
