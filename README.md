@@ -1,1 +1,1 @@
-Python homework in school Moscow State University
+Python homework at the Evening Math School at Moscow State University
