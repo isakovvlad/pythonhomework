@@ -49,29 +49,47 @@ class Matrix():
     def getTranspose(self):
         return self.transpose(self.matrix)
     
-    @staticmethod
-    def find(m, r_s, c_s):
-        for i in range(r_s, m.rows):
-            for j in range(c_s, m.cols):
-                if m.matrix[i][j] != 0:
-                    return i, j
-        return -1 
-
-    @staticmethod
-    def kill(m, r_p, c_p, c_s):
-        if c_s != r_p:
-            m.matrix[c_s] = list(map(lambda x, y : x + y, m.matrix[c_s], m.matrix[r_p]))
-        for i in range(c_s + 1, m.rows):
-            coef = -m.matrix[i][c_p] / m.matrix[r_p][c_p]
-            m.matrix[i] = list(map(lambda x , y : x + y * coef, m.matrix[i], m.matrix[r_p]))
-    
     def gauss(self):
-        col = 0
-        for i in range(self.rows - 1):
-            pivot = Matrix.find(self, i, col)
-            if isinstance(pivot, int):
-                break 
-            Matrix.kill(self, pivot[0], pivot[1], i)
+        for i in range(self.rows):
+            mx = abs(self.matrix[i][i])
+            mxr = i
+            for k in range(i + 1, self.cols):
+                if abs(self.matrix[k][i]) > mx:
+                    mx = abs(self.matrix[k][i])
+                    mxr = k
+            self.matrix[i], self.matrix[mxr] = self.matrix[mxr], self.matrix[i]
+            for j in range(i + 1, self.rows):
+                c = -self.matrix[j][i] / self.matrix[i][i]
+                for k in range(i, self.rows):
+                    if i == j:
+                        self.matrix[j][k] = 0
+                    else:
+                        self.matrix[j][k] += c * self.matrix[i][k]
+    
+    def gauss_answer(self, v):
+        for i in range(self.rows):
+            mx = abs(self.matrix[i][i])
+            mxr = i
+            for k in range(i + 1, self.cols):
+                if abs(self.matrix[k][i]) > mx:
+                    mx = abs(self.matrix[k][i])
+                    mxr = k
+            v[i], v[mxr] = v[mxr], v[i]
+            self.matrix[i], self.matrix[mxr] = self.matrix[mxr], self.matrix[i]
+            for j in range(i + 1, self.rows):
+                c = -self.matrix[j][i] / self.matrix[i][i]
+                for k in range(i, self.rows):
+                    if i == j:
+                        self.matrix[j][k] = 0
+                    else:
+                        self.matrix[j][k] += c * self.matrix[i][k]
+                v[j] += c * v[i]
+        x = [0 for i in range(self.rows)]
+        for i in range(self.rows - 1, -1, -1):
+            x[i] = v[i] / self.matrix[i][i]
+            for k in range(i - 1, -1, -1):
+                v[k] -= self.matrix[k][i] * x[i]
+        return x
 
     def __str__(self):
         out = ''
@@ -83,6 +101,8 @@ m1 = Matrix(2, 2, [[1,2],[3,4]])
 m2 = Matrix(2, 2, [[5,6],[7,8]])
 m3 = Matrix(2, 4, [[1,2,3,4],[4,3,2,1]])
 a = Matrix(3, 3, [[3, -2, 4],[3, 4, -2],[2, -1, -1]])
+c = Matrix(3, 3, [[3, -2, 4],[3, 4, -2],[2, -1, -1]])
+b = [-9, 6, 12]
 k = 3
 print('m1 =', m1)
 print('m2 =', m2)
@@ -94,3 +114,4 @@ print('m1 * m3 =', m1 * m3)
 print('m3.transpose() =', m3.getTranspose())
 a.gauss()
 print('a.gauss() =', a)
+print('Gauss Answer:', c.gauss_answer(b))
