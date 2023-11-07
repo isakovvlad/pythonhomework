@@ -1,3 +1,7 @@
+#Не достатки алгоритма Гаусса:
+#1. При его реализации начинают накапливаться погрешности округления.
+#2. На главной диагонали не должно быть нулевых элементов.
+#3. И по мне он не очень быстрый:( Хочу быстрее>:>!
 class Matrix():
     
     def __init__(self, rows, cols, matrix = None):
@@ -51,38 +55,38 @@ class Matrix():
     
     def gauss(self):
         for i in range(self.rows):
-            mx = abs(self.matrix[i][i])
             mxr = i
+            mx = abs(self.matrix[i][i])
             for k in range(i + 1, self.cols):
                 if abs(self.matrix[k][i]) > mx:
-                    mx = abs(self.matrix[k][i])
                     mxr = k
+                    mx = abs(self.matrix[k][i])
             self.matrix[i], self.matrix[mxr] = self.matrix[mxr], self.matrix[i]
             for j in range(i + 1, self.rows):
                 c = -self.matrix[j][i] / self.matrix[i][i]
                 for k in range(i, self.rows):
-                    if i == j:
-                        self.matrix[j][k] = 0
-                    else:
+                    if i != j:
                         self.matrix[j][k] += c * self.matrix[i][k]
+                    else:
+                        self.matrix[j][k] = 0
     
     def gauss_answer(self, v):
         for i in range(self.rows):
-            mx = abs(self.matrix[i][i])
             mxr = i
+            mx = abs(self.matrix[i][i])
             for k in range(i + 1, self.cols):
                 if abs(self.matrix[k][i]) > mx:
-                    mx = abs(self.matrix[k][i])
                     mxr = k
+                    mx = abs(self.matrix[k][i])
             v[i], v[mxr] = v[mxr], v[i]
             self.matrix[i], self.matrix[mxr] = self.matrix[mxr], self.matrix[i]
             for j in range(i + 1, self.rows):
                 c = -self.matrix[j][i] / self.matrix[i][i]
                 for k in range(i, self.rows):
-                    if i == j:
-                        self.matrix[j][k] = 0
-                    else:
+                    if i != j:
                         self.matrix[j][k] += c * self.matrix[i][k]
+                    else:
+                        self.matrix[j][k] = 0
                 v[j] += c * v[i]
         x = [0 for i in range(self.rows)]
         for i in range(self.rows - 1, -1, -1):
