@@ -32,12 +32,3 @@ class Vector():
 
     def __str__(self):
         return str(*self.p)
-
-#Это для теста
-#x = Vector(1, 2, 3, 4)
-#y = Vector(5, 6, 7, 8)
-#print('x + y = z', x + y)
-#print('x - y = f', y - x)
-#print('scalar mul:', x * y)
-#print('|x| =', abs(x), '|y| =', abs(y))
-#print('angle', x.anglevectors(y))
