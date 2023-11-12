@@ -110,8 +110,7 @@ class Matrix():
     def LU(self):
         if self.rows != self.cols:
             return 'Неверные данные'
-        L = Matrix(self.rows, self.cols, [[0] * self.rows for i in range(self.rows)])
-        U = Matrix(self.rows, self.cols, [[0] * self.rows for i in range(self.rows)])
+        L, U = Matrix(self.rows, self.cols, [[0] * self.rows for i in range(self.rows)]), Matrix(self.rows, self.cols, [[0] * self.rows for i in range(self.rows)])
         for i in range(self.rows):
             L.matrix[i][i] = 1
             for h in range(i, self.rows):
