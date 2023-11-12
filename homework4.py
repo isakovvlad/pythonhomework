@@ -114,15 +114,9 @@ class Matrix():
         for i in range(self.rows):
             L.matrix[i][i] = 1
             for h in range(i, self.rows):
-                sm = 0
-                for k in range(i):
-                    sm += L.matrix[i][k] * U.matrix[k][h]
-                U.matrix[i][h] = self.matrix[i][h] - sm
+                U.matrix[i][h] = self.matrix[i][h] - sum(L.matrix[i][k] * U.matrix[k][h] for k in range(i))
             for h in range(i + 1, self.rows):
-                sm = 0
-                for k in range(i):
-                    sm += L.matrix[h][k] * U.matrix[k][i]
-                L.matrix[h][i] = self.matrix[h][i] / U.matrix[i][i] - sm / U.matrix[i][i]
+                L.matrix[h][i] = self.matrix[h][i] / U.matrix[i][i] - sum(L.matrix[h][k] * U.matrix[k][i] for k in range(i)) / U.matrix[i][i]
         return L.matrix, U.matrix
 
     def __str__(self):
