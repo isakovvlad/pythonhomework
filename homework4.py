@@ -118,6 +118,17 @@ class Matrix():
             for h in range(i + 1, self.rows):
                 L.matrix[h][i] = self.matrix[h][i] / U.matrix[i][i] - sum(L.matrix[h][k] * U.matrix[k][i] for k in range(i)) / U.matrix[i][i]
         return L, U
+        
+    def QR(self):
+        Q, R = Matrix(self.rows, self.cols, [[0.] * self.cols for i in range(self.rows)]), Matrix(self.rows, self.cols, [[0.] * self.cols for i in range(self.cols)])
+        for j in range(self.cols):
+            v = [self.matrix[i][j] for i in range(self.rows)]
+            for i in range(j):
+                R.matrix[i][j] = sum(q * w for q, w in zip(Q.matrix[i], v))
+                v = [q + w for q, w in zip(v, [-R.matrix[i][j] * e for e in Q.matrix[i]])]
+            R.matrix[j][j] = sum(q * w for q, w in zip(v, v)) ** 0.5
+            Q.matrix[j] = [q / R.matrix[j][j] for q in v]
+        return Q.matrix, R.matrix
 
     def __str__(self):
         out = ''
