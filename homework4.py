@@ -128,7 +128,7 @@ class Matrix():
                 v = [q + w for q, w in zip(v, [-R.matrix[i][j] * e for e in Q.matrix[i]])]
             R.matrix[j][j] = sum(q * w for q, w in zip(v, v)) ** 0.5
             Q.matrix[j] = [q / R.matrix[j][j] for q in v]
-        return Q.matrix, R.matrix
+        return Q, R
 
     def __str__(self):
         out = ''
