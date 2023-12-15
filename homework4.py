@@ -124,10 +124,10 @@ class Matrix():
         for j in range(self.cols):
             v = [self.matrix[i][j] for i in range(self.rows)]
             for i in range(j):
-                R.matrix[i][j] = sum(q * w for q, w in zip(Q.matrix[i], v))
-                v = [q + w for q, w in zip(v, [-R.matrix[i][j] * e for e in Q.matrix[i]])]
-            R.matrix[j][j] = sum(q * w for q, w in zip(v, v)) ** 0.5
-            Q.matrix[j] = [q / R.matrix[j][j] for q in v]
+                R.matrix[i][j] = sum(r * w for r, w in zip(Q.matrix[i], v))
+                v = [r + w for r, w in zip(v, [-R.matrix[i][j] * e for e in Q.matrix[i]])]
+            R.matrix[j][j] = sum(r * w for r, w in zip(v, v)) ** 0.5
+            Q.matrix[j] = [r / R.matrix[j][j] for r in v]
         return Q, R
 
     def __str__(self):
