@@ -117,19 +117,23 @@ class Matrix():
                 U.matrix[i][h] = self.matrix[i][h] - sum(L.matrix[i][k] * U.matrix[k][h] for k in range(i))
             for h in range(i + 1, self.rows):
                 L.matrix[h][i] = self.matrix[h][i] / U.matrix[i][i] - sum(L.matrix[h][k] * U.matrix[k][i] for k in range(i)) / U.matrix[i][i]
-        return L, U
+        return L.matrix, U.matrix
+        
         
     def QR(self):
-        Q, R = Matrix(self.rows, self.cols, [[0.] * self.cols for i in range(self.rows)]), Matrix(self.rows, self.cols, [[0.] * self.cols for i in range(self.cols)])
-        for j in range(self.cols):
-            v = [self.matrix[i][j] for i in range(self.rows)]
-            for i in range(j):
-                R.matrix[i][j] = sum(r * w for r, w in zip(Q.matrix[i], v))
-                v = [r + w for r, w in zip(v, [-R.matrix[i][j] * e for e in Q.matrix[i]])]
-            R.matrix[j][j] = sum(r * w for r, w in zip(v, v)) ** 0.5
-            Q.matrix[j] = [r / R.matrix[j][j] for r in v]
+        if self.rows > self.cols:
+            return 'Неверные данные'
+        Q, R = [[0] * self.rows for i in range(self.rows)], [[0] * self.rows for i in range(self.rows)]
+        for i in range(self.rows):
+            v = self.matrix[i]
+            for j in range(i):
+                R[j][i] = sum(x * y for x, y in zip(Q[j], self.matrix[i]))
+                v = [x - y for x, y in zip(v, [z * R[j][i] for z in Q[j]])]
+            R[i][i] = sum(x ** 2 for x in v) ** 0.5
+            Q[i] = [x / R[i][i] for x in v]
+        Q = [[x[i] for x in Q] for i in range(len(Q[0]))]
         return Q, R
-
+        
     def __str__(self):
         out = ''
         for i in range(self.rows):
