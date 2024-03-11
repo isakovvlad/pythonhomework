@@ -168,16 +168,16 @@ def FindRoots(polynom, l, r):
     sturm = Sturm(polynom)
     i = [(l, r)]
     t = 0.001
-    roots = []
+    rts = []
     while i:
         ii = i.pop()
         cnt_l = RootCount(ii[0], ii[1], sturm)
         if cnt_l == 1:
-            root = Newton_method(polynom, ii[0], ii[1], t)
-            roots.append(root)
+            rt = Newton_method(polynom, ii[0], ii[1], t)
+            rts.append(rt)
         elif cnt_l == 0:
             continue
         elif cnt_l != 0 and cnt_l != 1:
             i.append((ii[0], (ii[0] + ii[1]) / 2))
             i.append(((ii[0] + ii[1]) / 2, ii[1]))
-    return roots
+    return rts
