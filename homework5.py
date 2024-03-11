@@ -119,15 +119,15 @@ def Sturm(polynom):
             break
     return sturm
 
-def Secushaya(f, l, r):
-    root = l - ((r - l) * f(l)) / (f(r) - f(l))
-    while abs(f(root)) < 10**(-8):
-        if f(root) * f(l) < 0:
-            r = root
-        elif f(root) * f(r) < 0:
-            l = root
-        root = l - ((r - l) * f(l)) / (f(r) - f(l))
-    return root
+def Secushaya_method(f, l, r):
+    rt = l - ((r - l) * f(l)) / (f(r) - f(l))
+    while abs(f(rt)) < 10**(-8):
+        if f(rt) * f(l) < 0:
+            r = rt
+        elif f(rt) * f(r) < 0:
+            l = rt
+        rt = l - ((r - l) * f(l)) / (f(r) - f(l))
+    return rt
 
 def RootCount(left, right, sturm):
     ChangeLeft = 0
@@ -148,35 +148,36 @@ def Tangent(func, deriv, initial, left, right):
     x_k = initial
     c = 0
     while abs(func(x_k)) > 1e-08 and c < 10000:
-      if x_k > right or x_k < left:
-          print("Something wrong")
-          break
-      x_k = x_k - func(x_k) / deriv(x_k)
-      c += 1
+        if x_k > right or x_k < left:
+            print("Something wrong")
+            break
+        x_k = x_k - func(x_k) / deriv(x_k)
+        c += 1
     return x_k
 
-def Method_Necas(func, x0, x1, t, it_cnt = 0):
+def Newton_method(f, a, b, t, it_cnt = 0):
     while abs(func.FindValue(x1)) > t and it_cnt < 10000:
-        x0, x1 = x1, x1 - func.FindValue(x1) * (x1 - x0) / (func.FindValue(x1) - func.FindValue(x0))
+        a, b = b, b - f.FindValue(b) * (b - a) / (f.FindValue(b) - f.FindValue(a))
         it_cnt += 1
     if it_cnt == 10000:  
         print("wrong")
-    return x1
+    else:
+        return x1
 
 def FindRoots(polynom, l, r):
     sturm = Sturm(polynom)
-    inters = [(l, r)]
+    i = [(l, r)]
     t = 0.001
     roots = []
-    while inters:
-        inter = inters.pop()
-        cnt_l = RootCount(inter[0], inter[1], sturm)
-        if cnt_l == 0:
-            continue
-        elif cnt_l == 1:
-            root = Method_Necas(polynom, inter[0], inter[1], t = t)
+    while i:
+        ii = i.pop()
+        cnt_l = RootCount(ii[0], ii[1], sturm)
+        if cnt_l == 1:
+            root = Newton_method(polynom, ii[0], ii[1], t)
             roots.append(root)
-        else:
-            inters.append((inter[0], (inter[0] + inter[1]) / 2))
-            inters.append(((inter[0] + inter[1]) / 2, inter[1]))
+        elif cnt_l == 0:
+            continue
+        elif cnt_l != 0 and cnt_l != 1:
+            i.append((ii[0], (ii[0] + ii[1]) / 2))
+            i.append(((ii[0] + ii[1]) / 2, ii[1]))
     return roots
