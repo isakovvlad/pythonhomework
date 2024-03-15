@@ -155,29 +155,22 @@ def Tangent(func, deriv, initial, left, right):
         c += 1
     return x_k
 
-def Newton_method(f, a, b, t, it_cnt = 0):
-    while abs(func.FindValue(x1)) > t and it_cnt < 10000:
-        a, b = b, b - f.FindValue(b) * (b - a) / (f.FindValue(b) - f.FindValue(a))
-        it_cnt += 1
-    if it_cnt == 10000:  
-        print("wrong")
-    else:
-        return x1
+def MegaLutiPoisk(function, l, r):
+    mid = 0
+    while r - l - 10**(-8) > 0:
+        mid = (r + l) / 2
+        if abs(function(mid)) < 10**(-8):
+            return mid
+        if function(mid) * function(l) < 0:
+            r = mid
+        elif function(mid) * function(r) < 0:
+            l = mid
+    return mid
 
-def FindRoots(polynom, l, r):
-    sturm = Sturm(polynom)
-    i = [(l, r)]
-    t = 0.001
-    rts = []
-    while i:
-        ii = i.pop()
-        cnt_l = RootCount(ii[0], ii[1], sturm)
-        if cnt_l == 1:
-            rt = Newton_method(polynom, ii[0], ii[1], t)
-            rts.append(rt)
-        elif cnt_l == 0:
-            continue
-        elif cnt_l != 0 and cnt_l != 1:
-            i.append((ii[0], (ii[0] + ii[1]) / 2))
-            i.append(((ii[0] + ii[1]) / 2, ii[1]))
-    return rts
+def PolynomRoots(function, sturm, l, r):
+    if RootCount(sturm, l, r) == 0:
+        return ["bruh..........."]
+    elif RootCount(l, r, sturm) == 1:
+        return [MegaLutiPoisk(function, l, r)]
+    else:
+        return (PolynomRoots(function, sturm, l, (r + l) / 2) + PolynomRoots(function, sturm, (r + l) / 2, r))
