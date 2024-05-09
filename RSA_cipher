@@ -53,8 +53,8 @@ class RSA_cipher:
 
 public_key, private_key = RSA_cipher().generate_key_pair()
 user_message = input("enter a message: ")
-print("public and private keys:", public_key, private_key)
 encrypted_message = RSA_cipher().encrypt_message(user_message, public_key)
 decrypted_message = RSA_cipher().decrypt_message(encrypted_message, private_key)
+print("public and private keys:", public_key, private_key)
 print("encrypted message: ", "".join(encrypted_message))
 print("decrypted message: ", decrypted_message)
