@@ -2,7 +2,7 @@ import random, math
 
 class RSA_cipher:
 
-    #Проверка на простость числа
+    #Проверка на простоту числа
     @staticmethod
     def number_is_prime(number):
         if number == 1:
