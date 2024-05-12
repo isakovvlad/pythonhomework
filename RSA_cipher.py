@@ -37,7 +37,8 @@ class RSA_cipher:
             e = random.randint(1, f_n)
             d = self.gcd(e, f_n)
         d = pow(e, -1, f_n)
-        return (e, p * q), (d, p * q)
+        pblc_key, prvt_key = (e, p * q), (d, p * q)
+        return pblc_key, prvt_key
 
     #Шифрование
     @staticmethod
