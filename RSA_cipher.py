@@ -22,7 +22,7 @@ class RSA_cipher:
         return a
 
     #Генерация простого числа
-    def generate_prime_number(self, lower_limit = 10, upper_limit = 10000, prime_number = 0):
+    def generate_prime_number(self, lower_limit = 0, upper_limit = 1000, prime_number = 0):
         while not self.number_is_prime(prime_number):
             prime_number = random.randint(lower_limit, upper_limit)
         return prime_number
@@ -31,11 +31,11 @@ class RSA_cipher:
     def generate_key_pair(self):
         p, q = self.generate_prime_number(), self.generate_prime_number()
         f_n = (p - 1) * (q - 1)
-        e = random.randint(1, f_n)
-        d = self.gcd(e, f_n)
-        while d != 1:
-            e = random.randint(1, f_n)
-            d = self.gcd(e, f_n)
+        e = 2
+        tmp = self.gcd(e, f_n)
+        while tmp != 1:
+            e += 1
+            tmp = self.gcd(e, f_n)
         d = pow(e, -1, f_n)
         pblc_key, prvt_key = (e, p * q), (d, p * q)
         return pblc_key, prvt_key
