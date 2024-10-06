@@ -97,3 +97,111 @@ def main(input_file='input.txt', output_file='output.txt'):
         
 if __name__ == "__main__":        
     main()
+------------------------------------------------------------------------------------------------------------------------------
+import random
+import pyray
+from raylib import colors
+
+class Ball:
+    def __init__(self, x, y, img):
+        self.pos = [x, y]
+        self.image = pyray.load_texture(img)
+        self.velocity = [random.choice([-7, 7]), random.choice([-7, 7])]
+        self.radius = self.image.width // 2
+
+    def update(self):
+        self.pos[0] += self.velocity[0]
+        self.pos[1] += self.velocity[1]
+        if self.pos[0] - self.radius < 0 or self.pos[0] + self.radius > 800:
+            self.velocity[0] *= -1
+        if self.pos[1] - self.radius < 0 or self.pos[1] + self.radius > 600:
+            self.velocity[1] *= -1
+
+    def draw(self):
+        pyray.draw_texture(self.image, int(self.pos[0] - self.radius), int(self.pos[1] - self.radius), colors.WHITE)
+
+    def unload(self):
+        pyray.unload_texture(self.image)
+
+def main():
+    w, h = 800, 600
+    pyray.set_target_fps(30)
+    pyray.init_window(w, h, "Графическое приложение. Заготовка игры")
+    ball = Ball(w // 2, h // 2, "basketball.png")
+    while not pyray.window_should_close():
+        ball.update()
+        pyray.begin_drawing()
+        pyray.clear_background(colors.BLACK)
+        ball.draw()
+        pyray.end_drawing()
+    ball.unload()
+    pyray.close_window()
+
+if __name__ == '__main__':
+    main()
+
+------------------------------------------------------------------------------------------------------------------------------
+import random
+import pyray
+from raylib import colors
+
+class Ball:
+    def __init__(self, x, y, img):
+        self.pos = [x, y]
+        self.image = pyray.load_texture(img)
+        self.velocity = [random.choice([-7, 7]), random.choice([-7, 7])]
+        self.radius = self.image.width // 2
+
+    def move(self):
+        self.pos[0] += self.velocity[0]
+        self.pos[1] += self.velocity[1]
+        if self.pos[0] - self.radius < 0 or self.pos[0] + self.radius > 800:
+            self.velocity[0] *= -1
+        if self.pos[1] - self.radius < 0 or self.pos[1] + self.radius > 600:
+            self.velocity[1] *= -1
+
+    def draw(self):
+        pyray.draw_texture(self.image, int(self.pos[0] - self.radius), int(self.pos[1] - self.radius), colors.WHITE)
+
+    def unload(self):
+        pyray.unload_texture(self.image)
+
+class Platform:
+    def __init__(self, x, y, width, height):
+        self.pos = [x, y]
+        self.size = [width, height]
+        self.speed = 10
+
+    def move(self):
+        if pyray.is_key_down(pyray.KEY_A):
+            self.pos[0] -= self.speed
+        if pyray.is_key_down(pyray.KEY_D):
+            self.pos[0] += self.speed
+        if self.pos[0] < 0:
+            self.pos[0] = 0
+        if self.pos[0] + self.size[0] > 800:
+            self.pos[0] = 800 - self.size[0]
+
+    def draw(self):
+        pyray.draw_rectangle(int(self.pos[0]), int(self.pos[1]), int(self.size[0]), int(self.size[1]), colors.WHITE)
+
+def main():
+    w, h = 800, 600
+    pyray.set_target_fps(60)
+    pyray.init_window(w, h, "Графическое приложение. Заготовка игры")
+    ball = Ball(w // 2, h // 2, "basketball.png")
+    platform = Platform(w // 2 - 50, h - 50, 100, 20)
+    while not pyray.window_should_close():
+        ball.move()
+        platform.move()
+        pyray.begin_drawing()
+        pyray.clear_background(colors.BLACK)
+        ball.draw()
+        platform.draw()
+        pyray.end_drawing()
+    ball.unload()
+    pyray.close_window()
+
+if __name__ == '__main__':
+    main()
+
